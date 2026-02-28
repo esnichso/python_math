@@ -3,22 +3,22 @@ class Number:
     def __init__(self, value):
         self.value = value
 
-    def __add__(self, other):
+    def __add__(self, other): # Number + Number
         if isinstance(other, Number):
             return Number(self.value + other.value)
         return NotImplemented
 
-    def __sub__(self, other):
+    def __sub__(self, other): # Number - Number
         if isinstance(other, Number):
             return Number(self.value - other.value)
         return NotImplemented
 
-    def __mul__(self, other):
+    def __mul__(self, other): # Number * Number
         if isinstance(other, Number):
             return Number(self.value * other.value)
         return NotImplemented
 
-    def __truediv__(self, other):
+    def __truediv__(self, other): # Number / Number
         if isinstance(other, Number):
             return Number(self.value / other.value)
         return NotImplemented
@@ -31,18 +31,29 @@ class Vector:
         self.dimension = dimension
         self.values = values
 
-    def __add__(self, other):
+    def __add__(self, other): # Vector + Vector
         if isinstance(other, Vector):
             if self.dimension.value == other.dimension.value:
                 return Vector(self.dimension, [a + b for a, b in zip(self.values, other.values)])
         return NotImplemented
 
-    def __mul__(self, other):
+    def __sub__(self, other): # Vector - Vector
         if isinstance(other, Vector):
             if self.dimension.value == other.dimension.value:
+                return Vector(self.dimension, [a - b for a, b in zip(self.values, other.values)])
+        return NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other, Vector): # Vector * Vector
+            if self.dimension.value == other.dimension.value:
                 return Number(sum([a.value * b.value for a, b in zip(self.values, other.values)]))
-        elif isinstance(other, Number):
+        elif isinstance(other, Number): # Vector * Number
             return Vector(self.dimension, [Number(a.value * other.value) for a in self.values])
+        return NotImplemented
+
+    def __rmul__(self, other): # Righthand multiplication
+        if isinstance(other, Number): # Number * Vector
+            return Vector(self.dimension, [Number(other.value * a.value) for a in self.values])
         return NotImplemented
 
     def __repr__(self):
