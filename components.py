@@ -82,9 +82,9 @@ class Point:
         self.dimension = dimension
         self.coordinates = coordinates
 
-    def __eq__(self, value):
-        if isinstance(value, Point):
-            return self.coordinates == value.coordinates
+    def __eq__(self, other):
+        if isinstance(other, Point):
+            return all([a.value == b.value for a, b in zip(self.coordinates, other.coordinates)])
         return NotImplemented
 
     def location_vector(self):
@@ -93,24 +93,3 @@ class Point:
     def __repr__(self):
         return f"Point({self.coordinates})"
 
-# Test Cases
-
-a = Number(5)
-b = Number(10)
-c = a + b
-d = a * b
-e = a / b
-f = Vector(Number(2), [Number(1), Number(2)])
-g = Vector(Number(2), [Number(3), Number(4)])
-h = f + g
-i = f * g
-j = f * Number(2)
-
-print(c)  # Number(15)
-print(d)  # Number(50)
-print(e)  # Number(0.5)
-print(f)  # 2-Vector([1, 2])
-print(g)  # 2-Vector([3, 4])
-print(h)  # 2-Vector([4, 6])
-print(i)  # Number(11)
-print(j)  # 2-Vector([2, 4])
