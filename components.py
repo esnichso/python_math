@@ -63,6 +63,22 @@ class Vector:
     # TODO normalization of Vector
     # TODO Cross product of Vector
 
+class Point:
+    def __init__(self, dimension: Number, coordinates: list[Number]):
+        self.dimension = dimension
+        self.coordinates = coordinates
+
+    def __eq__(self, value):
+        if isinstance(value, Point):
+            return self.coordinates == value.coordinates
+        return NotImplemented
+
+    def location_vector(self):
+        return Vector(self.dimension, [Number(c.value) for c in self.coordinates])
+
+    def __repr__(self):
+        return f"Point({self.coordinates})"
+
 # Test Cases
 
 a = Number(5)
