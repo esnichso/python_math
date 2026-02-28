@@ -59,9 +59,23 @@ class Vector:
     def __repr__(self):
         return f"{self.dimension.value}-Vector({self.values})"
 
-    # TODO length of Vector
-    # TODO normalization of Vector
-    # TODO Cross product of Vector
+    def length(self): # euclidean length
+        return Number(sum([a.value ** 2 for a in self.values]) ** 0.5)
+
+    def normalize(self): # Normalize the vector
+        length = self.length()
+        if length.value != 0:
+            return Vector(self.dimension, [Number(a.value / length.value) for a in self.values])
+        return NotImplemented
+
+    def cross(self, other): # Cross product 3D!
+        if isinstance(other, Vector):
+            if self.dimension.value == 3 and other.dimension.value == 3:
+                x = self.values[1].value * other.values[2].value - self.values[2].value * other.values[1].value
+                y = self.values[2].value * other.values[0].value - self.values[0].value * other.values[2].value
+                z = self.values[0].value * other.values[1].value - self.values[1].value * other.values[0].value
+                return Vector(self.dimension, [Number(x), Number(y), Number(z)])
+        return NotImplemented
 
 class Point:
     def __init__(self, dimension: Number, coordinates: list[Number]):
