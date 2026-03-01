@@ -148,4 +148,4 @@ class Matrix:
         return NotImplemented
     
     def __repr__(self):
-        return f"Matrix({self.rows.value}x{self.columns.value}, {self.values})"
+        return f"{self.rows.value}x{self.columns.value}-Matrix({self.values})"

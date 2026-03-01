@@ -68,4 +68,4 @@ def test_matrix_vector_mul_dimension_mismatch_returns_notimplemented():
 
 def test_matrix_repr():
     m = Matrix(Number(2), Number(2), [[Number(1), Number(2)], [Number(3), Number(4)]])
-    assert repr(m) == "Matrix(2x2, [[Number(1), Number(2)], [Number(3), Number(4)]])"
+    assert repr(m) == "2x2-Matrix([[Number(1), Number(2)], [Number(3), Number(4)]])"
