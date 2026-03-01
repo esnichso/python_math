@@ -93,3 +93,59 @@ class Point:
     def __repr__(self):
         return f"Point({self.coordinates})"
 
+class Matrix:
+    def __init__(self, rows: Number, columns: Number, values: list[list[Number]]):
+        self.rows = rows
+        self.columns = columns
+        self.values = values
+    
+    def __add__(self, other): # Matrix + Matrix
+        if isinstance(other, Matrix):
+            if self.rows.value == other.rows.value and self.columns.value == other.columns.value:
+                return Matrix(self.rows, self.columns, [[a + b for a, b in zip(row_a, row_b)] for row_a, row_b in zip(self.values, other.values)])
+        return NotImplemented
+    
+    def __sub__(self, other):
+        if isinstance(other, Matrix): # Matrix - Matrix
+            if self.rows.value == other.rows.value and self.columns.value == other.columns.value:
+                return Matrix(self.rows, self.columns, [[a - b for a, b in zip(row_a, row_b)] for row_a, row_b in zip(self.values, other.values)])
+        return NotImplemented
+    
+    def __mul__(self, other):
+        if isinstance(other, Matrix): # Matrix * Matrix
+            if self.columns.value == other.rows.value:
+                result_values = []
+                for i in range(self.rows.value):
+                    result_row = []
+                    for j in range(other.columns.value):
+                        sum_product = Number(0)
+                        for k in range(self.columns.value):
+                            sum_product += self.values[i][k] * other.values[k][j]
+                        result_row.append(sum_product)
+                    result_values.append(result_row)
+                return Matrix(self.rows, other.columns, result_values)
+        elif isinstance(other, Vector): # Matrix * Vector
+            if self.columns.value == other.dimension.value:
+                result_values = []
+                for i in range(self.rows.value):
+                    sum_product = Number(0)
+                    for j in range(self.columns.value):
+                        sum_product += self.values[i][j] * other.values[j]
+                    result_values.append(sum_product)
+                return Vector(Number(self.rows.value), result_values)
+        return NotImplemented
+    
+    def __rmul__(self, other): # Righthand multiplication
+        if isinstance(other, Vector): # Vector * Matrix
+            if other.dimension.value == self.rows.value:
+                result_values = []
+                for j in range(self.columns.value):
+                    sum_product = Number(0)
+                    for i in range(self.rows.value):
+                        sum_product += other.values[i] * self.values[i][j]
+                    result_values.append(sum_product)
+                return Vector(Number(self.columns.value), result_values)
+        return NotImplemented
+    
+    def __repr__(self):
+        return f"Matrix({self.rows.value}x{self.columns.value}, {self.values})"
